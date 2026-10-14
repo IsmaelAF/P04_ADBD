@@ -4,6 +4,10 @@
 
 <img width="1463" height="1262" alt="entidad-relacion" src="https://github.com/user-attachments/assets/19f33e67-e91c-4a54-aaa6-e214907953f4" />
 
+## Modelo relacional
+
+<img width="1624" height="733" alt="modelo-relacional" src="https://github.com/user-attachments/assets/76d158bb-24fb-4e40-b9dd-70a50fbcd2f0" />
+
 ## Tablas 
 
 ### vivero
