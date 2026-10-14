@@ -41,3 +41,20 @@
 ### pedido
 
 <img width="715" height="194" alt="image" src="https://github.com/user-attachments/assets/adda578d-3d52-48d0-962a-ab559b664cbc" />
+
+## DELETE
+
+Con este ejemplo representativo de que la eliminación por DELETE es en cascada.
+
+<img width="549" height="138" alt="image" src="https://github.com/user-attachments/assets/c69f85b2-abd9-4e92-a356-81d1f5c0c334" />
+
+<img width="829" height="142" alt="image" src="https://github.com/user-attachments/assets/521d9e50-17ac-4034-903a-ea9fd9dd3b9f" />
+
+```sql
+DELETE FROM zona
+WHERE id_vivero = 1 AND id_zona = 2;
+```
+
+<img width="694" height="155" alt="image" src="https://github.com/user-attachments/assets/ca9f6cee-7625-4ef4-86bc-30f9cf3b55f8" />
+
+<img width="822" height="123" alt="image" src="https://github.com/user-attachments/assets/7d067ebc-934d-43b4-9fba-ed302dfb2aeb" />
