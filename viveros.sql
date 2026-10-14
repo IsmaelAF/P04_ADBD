@@ -1,4 +1,4 @@
--- Ejecución del script: sudo -u postgres psql -f viveros.sql
+-- Ejecución del script: sudo -u postgres psql -f /tmp/viveros.sql
 -- Acceder a la base de datos: psql -U gestor_viveros -d viveros -W
 -- Eliminar la base de datos: sudo -u postgres psql -c "DROP DATABASE viveros;"
 
