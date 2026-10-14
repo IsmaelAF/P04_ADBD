@@ -1,6 +1,6 @@
--- ejecución: sudo -u postgres psql -f viveros.sql
--- acceder: psql -U postgres -d viveros
--- eliminar DB: sudo -u postgres psql -c "DROP DATABASE viveros;"
+-- Ejecución del script: sudo -u postgres psql -f viveros.sql
+-- Acceder a la base de datos: psql -U gestor_viveros -d viveros -W
+-- Eliminar la base de datos: sudo -u postgres psql -c "DROP DATABASE viveros;"
 
 CREATE DATABASE viveros;
 
@@ -207,3 +207,71 @@ INSERT INTO empleado_zona (nif_empleado, id_vivero, id_zona, fecha0, fecha1, tar
 ('22222222B', 1, 2, '2026-01-01', NULL, 'Cajero de exteriores'),
 ('33333333C', 3, 1, '2025-05-01', '2026-10-01', 'Carga y descarga'),
 ('44444444D', 5, 1, '2026-08-01', NULL, 'Poda y regado');
+
+-- PRUEBA DELETE
+
+-- EJEMPLO 1: CASCADE
+-- Al eliminar una zona, desaparecen sus asignaciones relacionadas.
+-- ROLLBACK permite conservar los datos originales.
+
+BEGIN;
+
+DELETE FROM zona
+WHERE id_vivero = 1 AND id_zona = 2;
+
+SELECT * FROM producto_zona
+WHERE id_vivero = 1 AND id_zona = 2;
+
+SELECT * FROM empleado_zona
+WHERE id_vivero = 1 AND id_zona = 2;
+
+ROLLBACK;
+
+
+-- EJEMPLO 2: RESTRICT
+-- No se puede eliminar un cliente que tiene pedidos.
+-- El error de clave foránea es esperado.
+
+BEGIN;
+
+SAVEPOINT antes_del_delete;
+
+DELETE FROM cliente
+WHERE nif = '99999999Z';
+
+-- Si el DELETE falla, ejecutar:
+ROLLBACK TO SAVEPOINT antes_del_delete;
+
+ROLLBACK;
+
+-- SELECT DE CADA TABLA
+
+SELECT * FROM vivero;
+SELECT * FROM zona;
+SELECT * FROM producto;
+SELECT * FROM puesto;
+SELECT * FROM empleado;
+SELECT * FROM cliente;
+SELECT * FROM bonificacion;
+
+-- TABLA PEDIDO
+-- Atributo derivado
+
+SELECT
+    p.id_pedido,
+    p.fecha,
+    p.id_cliente,
+    p.id_empleado,
+    COALESCE(
+        SUM(pp.cantidad * pp.precio_venta),
+        0
+    ) AS importe
+FROM pedido p
+LEFT JOIN pedido_producto pp
+    ON p.id_pedido = pp.id_pedido
+GROUP BY
+    p.id_pedido,
+    p.fecha,
+    p.id_cliente,
+    p.id_empleado
+ORDER BY p.id_pedido;
